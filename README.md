@@ -110,6 +110,24 @@ TaskManagementSystem/
 └── README.md
 
 ---
+## Prerequisites
+
+### PostgreSQL Setup
+This project requires **PostgreSQL** (v14 or higher recommended). 
+
+1. **Install PostgreSQL:**
+   * **Windows/macOS:** Download the installer from the [Official PostgreSQL Website](https://www.postgresql.org/download/).
+   * **Linux (Ubuntu/Debian):** Run `sudo apt update && sudo apt install postgresql postgresql-contrib`.
+
+2. **Create Database and User:**
+   Open your terminal or `psql` console and run:
+   ```sql
+   CREATE DATABASE task_management;
+   CREATE USER your_user WITH PASSWORD 'DB_USER';
+   GRANT ALL PRIVILEGES ON DATABASE task_management TO DB_USER;
+   ```
+Note: Replace `DB_USER` and `DB_PASSWORD` with your desired credentials.
+Note: If no database credentials are provided in the .env file, the application will automatically fall back to using an internal SQLite database for development purposes.
 
 ## ⚙️ Backend Setup (Django)
 
@@ -122,18 +140,21 @@ python -m venv venv
 Windows:
 
 venv\Scripts\activate
-
+cd backend
 Mac/Linux:
 
 source venv/bin/activate
-
-### 3. Install dependencies
+cd backend 
+### 3. Install dependencies 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Create a .env file in the backend directory and add the following:
-```bash
+### 4. Create a .env file in the backend directory and add the following: 
+```bash 
+touch .env   #linux
+New-Item .env #windows
+ 
 DB_ENGINE=postgresql
 DB_NAME=task_management
 DB_USER=postgres
@@ -161,7 +182,7 @@ Backend runs at:
 http://127.0.0.1:8000/
 
 
-## 📁 Frontend Setup (React + Vite)
+## 📁 Frontend Setup (React + Vite) new Terminal cd frontend
 
 ### 1. Install dependencies
 ```bash
@@ -177,6 +198,15 @@ Frontend runs at:
 
 http://localhost:5173/
 
+if its blank try these commands:
+```bash
+npm install vite@5.4.0
+rm -rf node_modules package-lock.json node_modules/.vite
+npm cache clean --force
+npm install
+npm install @emotion/react @emotion/styled
+npm run dev
+```
 
 🔗 API Endpoints
 ### 📌 Task Management
