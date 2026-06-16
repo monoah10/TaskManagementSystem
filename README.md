@@ -168,7 +168,7 @@ DB_PORT=5432
 python manage.py migrate
 ```
 
-### 6. Create superuser   #Creds Will be Used for Login to FrontEnd UI
+### 6. Create superuser   # superuser Will be Used for Admin Login to FrontEnd UI
 ```bash
 python manage.py createsuperuser
 ```
