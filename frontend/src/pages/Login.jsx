@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import {
     Container,
@@ -11,7 +11,10 @@ import {
     Box,
     Alert,
     CircularProgress,
+    Divider,
 } from "@mui/material";
+
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
@@ -40,68 +43,106 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         setLoading(true);
         setError("");
 
         try {
-            const response = await api.post("/token/", form);
 
-            localStorage.setItem("access", response.data.access);
-            localStorage.setItem("refresh", response.data.refresh);
+            const response = await api.post(
+                "/token/",
+                form
+            );
+
+            localStorage.setItem(
+                "access",
+                response.data.access
+            );
+
+            localStorage.setItem(
+                "refresh",
+                response.data.refresh
+            );
 
             login(response.data.access);
 
             navigate("/");
+
         } catch (err) {
+
             console.error(err);
-            setError("Invalid username or password");
+
+            setError(
+                "Invalid username or password"
+            );
+
         } finally {
+
             setLoading(false);
         }
     };
 
     return (
-        <Container maxWidth="sm">
-
-            <Box
-                sx={{
-                    minHeight: "100vh",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
+        <Box
+            sx={{
+                minHeight: "100vh",
+                background:
+                    "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                p: 2,
+            }}
+        >
+            <Container maxWidth="sm">
 
                 <Card
                     sx={{
-                        width: "100%",
-                        p: 3,
-                        boxShadow: 5,
-                        borderRadius: 3,
+                        borderRadius: 4,
+                        boxShadow: 10,
                     }}
                 >
+                    <CardContent sx={{ p: 5 }}>
 
-                    <CardContent>
-
-                        <Typography
-                            variant="h4"
-                            textAlign="center"
-                            gutterBottom
+                        {/* Logo */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                mb: 3,
+                            }}
                         >
-                            Task Manager
-                        </Typography>
+                            <AssignmentTurnedInIcon
+                                color="primary"
+                                sx={{
+                                    fontSize: 60,
+                                    mb: 1,
+                                }}
+                            />
 
-                        <Typography
-                            variant="body2"
-                            textAlign="center"
-                            color="text.secondary"
-                            sx={{ mb: 3 }}
-                        >
-                            Sign in to continue
-                        </Typography>
+                            <Typography
+                                variant="h4"
+                                fontWeight="bold"
+                            >
+                                Task Manager
+                            </Typography>
+
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                            >
+                                Manage tasks, comments and teams
+                            </Typography>
+                        </Box>
+
+                        <Divider sx={{ mb: 3 }} />
 
                         {error && (
-                            <Alert severity="error" sx={{ mb: 2 }}>
+                            <Alert
+                                severity="error"
+                                sx={{ mb: 2 }}
+                            >
                                 {error}
                             </Alert>
                         )}
@@ -115,6 +156,7 @@ export default function Login() {
                                 value={form.username}
                                 onChange={handleChange}
                                 margin="normal"
+                                required
                             />
 
                             <TextField
@@ -125,6 +167,7 @@ export default function Login() {
                                 value={form.password}
                                 onChange={handleChange}
                                 margin="normal"
+                                required
                             />
 
                             <Button
@@ -132,26 +175,63 @@ export default function Login() {
                                 variant="contained"
                                 type="submit"
                                 disabled={loading}
-                                sx={{ mt: 2, py: 1.2 }}
+                                size="large"
+                                sx={{
+                                    mt: 3,
+                                    py: 1.4,
+                                    borderRadius: 2,
+                                }}
                             >
                                 {loading ? (
                                     <CircularProgress
-                                        size={22}
+                                        size={24}
                                         color="inherit"
                                     />
                                 ) : (
-                                    "Login"
+                                    "Sign In"
                                 )}
                             </Button>
 
                         </form>
 
-                    </CardContent>
+                        {/* Register */}
+                        <Box
+                            sx={{
+                                mt: 3,
+                                textAlign: "center",
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                            >
+                                Don't have an account?
+                            </Typography>
 
+                            <Button
+                                component={Link}
+                                to="/register"
+                                size="small"
+                            >
+                                Create Account
+                            </Button>
+                        </Box>
+
+                        {/* Footer */}
+                        <Typography
+                            variant="caption"
+                            color="text.secondary"
+                            display="block"
+                            textAlign="center"
+                            sx={{ mt: 3 }}
+                        >
+                            Task Management System • React + Django + JWT
+                        </Typography>
+
+                    </CardContent>
                 </Card>
 
-            </Box>
-
-        </Container>
+            </Container>
+        </Box>
     );
 }

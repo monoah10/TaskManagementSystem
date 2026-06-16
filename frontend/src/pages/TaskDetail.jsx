@@ -59,9 +59,15 @@ export default function TaskDetail() {
             toast.success("Task deleted");
             navigate("/");
         } catch (err) {
-            console.error(err);
-            toast.error("Failed to delete task");
-        }
+    console.error(err);
+
+    const message =
+        err.response?.data?.detail ||
+        err.response?.data?.message ||
+        "Operation failed";
+
+    toast.error(message);
+}
     };
 
     const handleEdit = () => {

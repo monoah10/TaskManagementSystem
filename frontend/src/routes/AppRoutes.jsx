@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Dashboard from "../pages/Dashboard";
 import TaskDetail from "../pages/TaskDetail";
+import Register from "../pages/Register";
 
 export default function AppRoutes() {
 
@@ -38,7 +39,10 @@ export default function AppRoutes() {
                         </ProtectedRoute>
                     }
                 />
-
+                <Route
+                    path="/register"
+                    element={<Register />}
+                />
             </Routes>
 
         </BrowserRouter>

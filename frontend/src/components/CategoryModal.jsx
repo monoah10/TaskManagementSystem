@@ -63,8 +63,13 @@ export default function CategoryModal({ open, onClose, isAdmin }) {
             fetchCategories();
 
         } catch (err) {
-            toast.error("Error");
-        }
+            console.error(err);
+            const message =
+                err.response?.data?.detail ||
+                err.response?.data?.message ||
+                "Operation failed";
+            toast.error(message);
+}
     };
 
     const handleEdit = (cat) => {

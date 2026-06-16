@@ -64,9 +64,12 @@ export default function TaskForm({
             const res = await api.get("/categories/");
             setCategories(res.data);
         } catch (err) {
-            console.error(err);
-            toast.error("Failed to load categories");
-        }
+    console.error(err);
+
+    if (err.response?.status !== 403) {
+        toast.error("Failed to load categories");
+    }
+}
     };
 
     const handleChange = (e) => {
