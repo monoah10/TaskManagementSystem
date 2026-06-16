@@ -127,7 +127,7 @@ This project requires **PostgreSQL** (v14 or higher recommended).
    GRANT ALL PRIVILEGES ON DATABASE task_management TO DB_USER;
    ```
 Note: Replace `DB_USER` and `DB_PASSWORD` with your desired credentials.
-Note: If no database credentials are provided in the .env file, the application will automatically fall back to using an internal SQLite database for development purposes.
+If no database credentials are provided in the .env file, the application will automatically fall back to using an internal SQLite database for development purposes.
 
 ## ⚙️ Backend Setup (Django)
 
